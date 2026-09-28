@@ -42,6 +42,10 @@ def move_right():
         draw_character(750, y)
     pass
 
+def move_left():
+    print("Move left")
+    pass
+
 while running:
     draw_Circle()
     if not running:
