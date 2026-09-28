@@ -74,6 +74,10 @@ def move_bottom_left():
         draw_character(x, 50)
     pass
 
+def move_triangle_right():
+    print("Move right")
+    pass
+
 while running:
     draw_Circle()
     if not running:
