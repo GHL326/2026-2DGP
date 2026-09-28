@@ -48,6 +48,10 @@ def move_left():
         draw_character(50, y)
     pass
 
+def move_bottom():
+    print("Move bottom")
+    pass
+
 while running:
     draw_Circle()
     if not running:
