@@ -39,7 +39,7 @@ def move_top():
 def move_right():
     print("Move right")
     for y in range(550, 50, -5):
-        pass
+        draw_character(750, y)
     pass
 
 while running:
