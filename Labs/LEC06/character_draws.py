@@ -44,6 +44,8 @@ def move_right():
 
 def move_left():
     print("Move left")
+    for y in range(50, 550, 5):
+        pass
     pass
 
 while running:
