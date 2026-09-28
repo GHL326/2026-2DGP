@@ -24,6 +24,7 @@ def draw_Circle():
 def draw_Rectangle():
     print("Rectangle")
     move_top()
+    move_right()
     pass
 
 def draw_character(x, y):
