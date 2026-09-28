@@ -31,6 +31,10 @@ def draw_character(x, y):
     update_canvas()
     delay(0.05)
 
+def move_top():
+    print("Move top")
+    pass
+
 while running:
     draw_Circle()
     if not running:
