@@ -29,6 +29,10 @@ def draw_Rectangle():
     move_left()
     pass
 
+def draw_Triangle():
+    print("Triangle")
+    pass
+
 def draw_character(x, y):
     clear_canvas()
     character.draw(x , y)
@@ -63,5 +67,6 @@ while running:
     if not running:
         break
     draw_Rectangle()
+    draw_Triangle()
 
 close_canvas()
