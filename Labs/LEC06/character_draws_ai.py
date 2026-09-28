@@ -8,6 +8,23 @@ from time import perf_counter
 WIDTH, HEIGHT = 800, 600
 SPEED = 220.0  # Pixels per second.
 CIRCLE_RADIUS = 200.0
+RECTANGLE = ((80, 520), (720, 520), (720, 80), (80, 80))
+
+
+def polygon_position(vertices, distance):
+    edges = list(zip(vertices, vertices[1:] + vertices[:1]))
+    lengths = [math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in edges]
+    remaining = distance % sum(lengths)
+
+    for (start, end), length in zip(edges, lengths):
+        if remaining < length:
+            ratio = remaining / length
+            return (
+                start[0] + (end[0] - start[0]) * ratio,
+                start[1] + (end[1] - start[1]) * ratio,
+            )
+        remaining -= length
+    return vertices[0]
 
 
 def circle_position(distance):
@@ -21,6 +38,8 @@ def circle_position(distance):
 def position_for(motion, distance):
     if motion == 'circle':
         return circle_position(distance)
+    if motion == 'rectangle':
+        return polygon_position(RECTANGLE, distance)
     return WIDTH / 2, HEIGHT / 2
 
 
