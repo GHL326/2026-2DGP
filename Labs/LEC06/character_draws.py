@@ -76,6 +76,8 @@ def move_bottom_left():
 
 def move_triangle_right():
     print("Move right")
+    for y in range(50, 550, 5):
+        pass
     pass
 
 while running:
