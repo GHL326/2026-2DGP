@@ -33,6 +33,8 @@ def draw_character(x, y):
 
 def move_top():
     print("Move top")
+    for x in range(50, 750, 5):
+        pass
     pass
 
 while running:
