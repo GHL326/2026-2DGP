@@ -34,8 +34,7 @@ def draw_character(x, y):
 def move_top():
     print("Move top")
     for x in range(50, 750, 5):
-        pass
-    pass
+        draw_character(x, 550)
 
 while running:
     draw_Circle()
