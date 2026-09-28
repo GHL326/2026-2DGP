@@ -1,12 +1,15 @@
 from pico2d import *
 
 import math
+from pathlib import Path
 
 open_canvas()
 
-character = load_image('character.png')
+character = load_image(str(Path(__file__).resolve().parent / 'character.png'))
+running = True
 
 def draw_Circle():
+    global running
     print("Cirlce")
 
     for i in range(360):
@@ -17,3 +20,16 @@ def draw_Circle():
         draw_character(x, y)
 
     pass
+
+def draw_character(x, y):
+    clear_canvas()
+    character.draw(x , y)
+    update_canvas()
+    delay(0.05)
+
+while running:
+    draw_Circle()
+    if not running:
+        break
+
+close_canvas()
