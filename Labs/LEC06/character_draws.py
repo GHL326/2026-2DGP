@@ -25,6 +25,7 @@ def draw_Rectangle():
     print("Rectangle")
     move_top()
     move_right()
+    move_bottom()
     pass
 
 def draw_character(x, y):
