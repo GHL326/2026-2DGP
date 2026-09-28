@@ -31,6 +31,7 @@ def draw_Rectangle():
 
 def draw_Triangle():
     print("Triangle")
+    move_top_left()
     pass
 
 def draw_character(x, y):
