@@ -65,7 +65,7 @@ def move_bottom():
 def move_top_left():
     print("Move top left")
     for x in range(750, 50, -5):
-        pass
+        draw_character(x, 550)
     pass
 
 while running:
