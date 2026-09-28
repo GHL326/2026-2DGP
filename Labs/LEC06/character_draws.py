@@ -45,7 +45,7 @@ def move_right():
 def move_left():
     print("Move left")
     for y in range(50, 550, 5):
-        pass
+        draw_character(50, y)
     pass
 
 while running:
