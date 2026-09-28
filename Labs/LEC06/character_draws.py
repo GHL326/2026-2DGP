@@ -33,6 +33,7 @@ def draw_Triangle():
     print("Triangle")
     move_top_left()
     move_bottom_left()
+    move_triangle_right()
     pass
 
 def draw_character(x, y):
@@ -81,6 +82,10 @@ def move_triangle_right():
     for y in range(50, 550, 5):
         draw_character(750, y)
     pass
+
+
+
+
 
 while running:
     draw_Circle()
