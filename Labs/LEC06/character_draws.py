@@ -50,6 +50,8 @@ def move_left():
 
 def move_bottom():
     print("Move bottom")
+    for x in range(50, 750, 5):
+        pass
     pass
 
 while running:
