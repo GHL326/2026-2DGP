@@ -21,6 +21,10 @@ def draw_Circle():
 
     pass
 
+def draw_Rectangle():
+    print("Rectangle")
+    pass
+
 def draw_character(x, y):
     clear_canvas()
     character.draw(x , y)
@@ -31,5 +35,6 @@ while running:
     draw_Circle()
     if not running:
         break
+    draw_Rectangle()
 
 close_canvas()
