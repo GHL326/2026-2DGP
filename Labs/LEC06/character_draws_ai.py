@@ -1,14 +1,26 @@
 from pico2d import *
 
+import math
 from pathlib import Path
 from time import perf_counter
 
 
 WIDTH, HEIGHT = 800, 600
 SPEED = 220.0  # Pixels per second.
+CIRCLE_RADIUS = 200.0
+
+
+def circle_position(distance):
+    angle = (distance % (math.tau * CIRCLE_RADIUS)) / CIRCLE_RADIUS
+    return (
+        WIDTH / 2 + CIRCLE_RADIUS * math.cos(angle),
+        HEIGHT / 2 + CIRCLE_RADIUS * math.sin(angle),
+    )
 
 
 def position_for(motion, distance):
+    if motion == 'circle':
+        return circle_position(distance)
     return WIDTH / 2, HEIGHT / 2
 
 
