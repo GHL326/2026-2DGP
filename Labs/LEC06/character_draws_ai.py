@@ -9,6 +9,7 @@ WIDTH, HEIGHT = 800, 600
 SPEED = 220.0  # Pixels per second.
 CIRCLE_RADIUS = 200.0
 RECTANGLE = ((80, 520), (720, 520), (720, 80), (80, 80))
+TRIANGLE = ((400, 520), (80, 80), (720, 80))
 
 
 def polygon_position(vertices, distance):
@@ -40,7 +41,9 @@ def position_for(motion, distance):
         return circle_position(distance)
     if motion == 'rectangle':
         return polygon_position(RECTANGLE, distance)
-    return WIDTH / 2, HEIGHT / 2
+    if motion == 'triangle':
+        return polygon_position(TRIANGLE, distance)
+    raise ValueError(f'Unknown motion: {motion}')
 
 
 def main():
