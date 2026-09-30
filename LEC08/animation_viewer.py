@@ -121,3 +121,20 @@ def draw_background(canvas):
     canvas.draw_rectangle(0, 0, WIDTH, HEIGHT, 21, 28, 39, filled=True)
     canvas.draw_rectangle(28, 110, WIDTH - 28, 600, 32, 44, 58, filled=True)
     canvas.draw_line(70, BASELINE - 5, WIDTH - 70, BASELINE - 5, 88, 116, 134)
+
+
+def draw_status(canvas, font, player):
+    if font is None:
+        return
+    animation = player.animation
+    font.draw(32, 654, 'KNIGHT / ANIMATION VIEWER', (226, 235, 244))
+    font.draw(32, 614, f'{player.index + 1:02d}  {animation.name.upper()}', (108, 219, 201))
+    status = (f'HOLD  {max(0, PAUSE_SECONDS - (player.elapsed - player.play_seconds)):.1f}s'
+              if player.holding else f'LOOP  {player.repeat_number} / {REPEATS}')
+    font.draw(470, 614, status, (255, 203, 117))
+    font.draw(40, 78, f'FRAME {player.frame_index + 1:02d}/{len(animation.frames):02d}'
+              f'     {animation.fps:g} FPS     {SCALE:g}x', (182, 202, 219))
+    font.draw(40, 40, 'AUTO: 5 LOOPS > 1s HOLD > NEXT     ESC: QUIT', (146, 170, 190))
+    progress = min(1.0, player.elapsed / player.play_seconds)
+    canvas.draw_rectangle(40, 99, WIDTH - 40, 104, 56, 73, 89, filled=True)
+    canvas.draw_rectangle(40, 99, 40 + (WIDTH - 80) * progress, 104, 108, 219, 201, filled=True)
