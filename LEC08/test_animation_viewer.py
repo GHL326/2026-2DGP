@@ -46,5 +46,32 @@ class PlaybackTests(unittest.TestCase):
                 self.player.advance(delta)
 
 
+class AssetTests(unittest.TestCase):
+    def test_variable_frame_sizes_and_counts(self):
+        image_path, animations = load_animations()
+        self.assertTrue(image_path.is_file())
+        self.assertEqual(image_path.name, 'knight_atlas.png')
+        self.assertEqual([a.name for a in animations], ['Idle', 'Walk', 'Run', 'Sword Attack', 'Spin Attack'])
+        self.assertEqual([len(a.frames) for a in animations], [40, 20, 20, 14, 16])
+        self.assertGreater(len({f.rect[2:] for a in animations for f in a.frames}), 1)
+        # Read dimensions from the standard PNG IHDR header, without pygame.
+        import struct
+        width, height = struct.unpack('>II', image_path.read_bytes()[16:24])
+        validate_animations(animations, width, height)
+
+    def test_every_sprite_is_large_and_inside_stage(self):
+        _, animations = load_animations()
+        for animation in animations:
+            for frame in animation.frames:
+                x, y, w, h = frame_destination(frame)
+                self.assertGreaterEqual(h, HEIGHT / 2)
+                self.assertGreaterEqual(x - w / 2, 28)
+                self.assertLessEqual(x + w / 2, WIDTH - 28)
+                self.assertGreaterEqual(y - h / 2, 110 - 1e-9)
+                self.assertLessEqual(y + h / 2, 600)
+                self.assertAlmostEqual(x - w / 2 + frame.pivot[0] * SCALE, WIDTH / 2)
+                self.assertAlmostEqual(y + h / 2 - frame.pivot[1] * SCALE, BASELINE)
+
+
 if __name__ == '__main__':
     unittest.main()
