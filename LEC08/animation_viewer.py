@@ -69,3 +69,19 @@ class Player:
     @property
     def holding(self):
         return self.elapsed >= self.play_seconds
+
+    @property
+    def frame_index(self):
+        if self.holding:
+            return len(self.animation.frames) - 1
+        return int(self.elapsed * self.animation.fps) % len(self.animation.frames)
+
+    @property
+    def repeat_number(self):
+        if self.holding:
+            return REPEATS
+        return min(REPEATS, int(self.elapsed * self.animation.fps) // len(self.animation.frames) + 1)
+
+    @property
+    def frame(self):
+        return self.animation.frames[self.frame_index]
