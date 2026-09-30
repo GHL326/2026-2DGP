@@ -107,3 +107,10 @@ def frame_destination(frame):
         width * SCALE,
         height * SCALE,
     )
+
+
+def draw_sprite(sheet, frame):
+    left, top, width, height = frame.rect
+    # Metadata uses a top-left origin; pico2d clipping uses bottom-left.
+    sheet.clip_draw(left, sheet.h - top - height, width, height,
+                    *frame_destination(frame))
