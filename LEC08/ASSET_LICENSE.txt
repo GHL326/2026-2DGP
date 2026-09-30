@@ -1,0 +1,8 @@
+Asset: Knight, Princess and Dragon 2
+Creator: akylrum
+Source: https://opengameart.org/content/knight-princess-and-dragon-2
+License designated by the creator on the source page: CC0 1.0 Universal
+License reference: https://creativecommons.org/publicdomain/zero/1.0/
+
+This project redistributes 110 unmodified knight PNG frames in knight_source.zip
+and a derived, trimmed sprite atlas in knight_atlas.png. See ASSETS.md for details.
