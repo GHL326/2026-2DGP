@@ -169,3 +169,29 @@ def quit_requested(canvas):
         if event.type == canvas.SDL_KEYDOWN and event.key == canvas.SDLK_ESCAPE:
             return True
     return False
+
+
+def main():
+    import pico2d as canvas
+
+    canvas.SDL_SetHint(b'SDL_RENDER_SCALE_QUALITY', b'linear')
+    canvas.open_canvas(WIDTH, HEIGHT)
+    try:
+        sheet, player, font = prepare_viewer(canvas)
+        previous = perf_counter()
+        while not quit_requested(canvas):
+            now = perf_counter()
+            player.advance(now - previous)
+            previous = now
+            draw_background(canvas)
+            draw_sprite(sheet, player.frame)
+            draw_status(canvas, font, player)
+            canvas.update_canvas()
+            # Holds use the same responsive event/render loop as playback.
+            canvas.delay(0.01)
+    finally:
+        canvas.close_canvas()
+
+
+if __name__ == '__main__':
+    main()
