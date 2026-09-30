@@ -50,3 +50,22 @@ def validate_animations(animations, image_width, image_height):
                 raise ValueError(f'Invalid frame: {frame}')
             if x + w > image_width or y + h > image_height:
                 raise ValueError(f'Frame outside sprite sheet: {frame}')
+
+
+class Player:
+    def __init__(self, animations):
+        self.animations = animations
+        self.index = 0
+        self.elapsed = 0.0
+
+    @property
+    def animation(self):
+        return self.animations[self.index]
+
+    @property
+    def play_seconds(self):
+        return len(self.animation.frames) * REPEATS / self.animation.fps
+
+    @property
+    def holding(self):
+        return self.elapsed >= self.play_seconds
