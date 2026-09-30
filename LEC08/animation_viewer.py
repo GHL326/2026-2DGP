@@ -138,3 +138,16 @@ def draw_status(canvas, font, player):
     progress = min(1.0, player.elapsed / player.play_seconds)
     canvas.draw_rectangle(40, 99, WIDTH - 40, 104, 56, 73, 89, filled=True)
     canvas.draw_rectangle(40, 99, 40 + (WIDTH - 80) * progress, 104, 108, 219, 201, filled=True)
+
+
+def load_status_font(canvas):
+    candidates = (
+        Path(os.environ.get('WINDIR', 'C:/Windows')) / 'Fonts' / 'consola.ttf',
+        Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),
+        Path('/System/Library/Fonts/Menlo.ttc'),
+    )
+    for path in candidates:
+        if path.is_file():
+            return canvas.load_font(str(path), 22)
+    print('Status font unavailable; playback continues without the text overlay.')
+    return None
