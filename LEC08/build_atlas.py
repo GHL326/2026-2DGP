@@ -41,3 +41,31 @@ def trim_frames(sources):
         raise ValueError('Animation has no source frames')
     return frames
 
+
+def main():
+    sources = load_source()
+    packed = []
+    animations = []
+    atlas_width = 4096
+    x = y = shelf_height = 0
+    for name, key, fps in ANIMATIONS:
+        frames = []
+        for sprite, pivot in trim_frames(sources[key]):
+            w, h = sprite.get_size()
+            if x + w > atlas_width:
+                x, y, shelf_height = 0, y + shelf_height + 2, 0
+            packed.append((sprite, (x, y)))
+            frames.append({'rect': [x, y, w, h], 'pivot': pivot})
+            x += w + 2
+            shelf_height = max(shelf_height, h)
+        animations.append({'name': name, 'fps': fps, 'frames': frames})
+    atlas = pygame.Surface((atlas_width, y + shelf_height), pygame.SRCALPHA)
+    for sprite, position in packed:
+        atlas.blit(sprite, position)
+    pygame.image.save(atlas, str(ROOT / 'knight_atlas.png'))
+    data = {'image': 'knight_atlas.png', 'animations': animations}
+    (ROOT / 'animations.json').write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
+
+
+if __name__ == '__main__':
+    main()
