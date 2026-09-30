@@ -27,3 +27,17 @@ def load_source():
             for _, key, _ in ANIMATIONS
         }
 
+
+def trim_frames(sources):
+    frames = []
+    for source in sources:
+        bounds = source.get_bounding_rect()
+        if bounds.width == 0 or bounds.height == 0:
+            raise ValueError('Empty frame in the knight source archive')
+        # Match the viewer's centered silhouette and common ground baseline.
+        pivot = [bounds.width / 2, bounds.height]
+        frames.append((source.subsurface(bounds).copy(), pivot))
+    if not frames:
+        raise ValueError('Animation has no source frames')
+    return frames
+
