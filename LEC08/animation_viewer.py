@@ -85,3 +85,14 @@ class Player:
     @property
     def frame(self):
         return self.animation.frames[self.frame_index]
+
+    def advance(self, seconds):
+        if not math.isfinite(seconds) or seconds < 0:
+            raise ValueError('Elapsed time must be finite and nonnegative')
+        self.elapsed += seconds
+        # Whole cycles have no effect, including after a long suspended window.
+        cycle = sum(len(a.frames) * REPEATS / a.fps + PAUSE_SECONDS for a in self.animations)
+        self.elapsed %= cycle
+        while self.elapsed >= self.play_seconds + PAUSE_SECONDS:
+            self.elapsed -= self.play_seconds + PAUSE_SECONDS
+            self.index = (self.index + 1) % len(self.animations)
