@@ -114,3 +114,10 @@ def draw_sprite(sheet, frame):
     # Metadata uses a top-left origin; pico2d clipping uses bottom-left.
     sheet.clip_draw(left, sheet.h - top - height, width, height,
                     *frame_destination(frame))
+
+
+def draw_background(canvas):
+    canvas.clear_canvas()
+    canvas.draw_rectangle(0, 0, WIDTH, HEIGHT, 21, 28, 39, filled=True)
+    canvas.draw_rectangle(28, 110, WIDTH - 28, 600, 32, 44, 58, filled=True)
+    canvas.draw_line(70, BASELINE - 5, WIDTH - 70, BASELINE - 5, 88, 116, 134)
