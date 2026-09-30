@@ -160,3 +160,12 @@ def prepare_viewer(canvas):
     sheet = canvas.load_image(str(image_path))
     validate_animations(animations, sheet.w, sheet.h)
     return sheet, Player(animations), load_status_font(canvas)
+
+
+def quit_requested(canvas):
+    for event in canvas.get_events():
+        if event.type == canvas.SDL_QUIT:
+            return True
+        if event.type == canvas.SDL_KEYDOWN and event.key == canvas.SDLK_ESCAPE:
+            return True
+    return False
