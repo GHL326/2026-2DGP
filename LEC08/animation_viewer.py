@@ -96,3 +96,14 @@ class Player:
         while self.elapsed >= self.play_seconds + PAUSE_SECONDS:
             self.elapsed -= self.play_seconds + PAUSE_SECONDS
             self.index = (self.index + 1) % len(self.animations)
+
+
+def frame_destination(frame):
+    _, _, width, height = frame.rect
+    pivot_x, pivot_y = frame.pivot
+    return (
+        WIDTH / 2 + (width / 2 - pivot_x) * SCALE,
+        BASELINE + (pivot_y - height / 2) * SCALE,
+        width * SCALE,
+        height * SCALE,
+    )
