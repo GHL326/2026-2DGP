@@ -151,3 +151,12 @@ def load_status_font(canvas):
             return canvas.load_font(str(path), 22)
     print('Status font unavailable; playback continues without the text overlay.')
     return None
+
+
+def prepare_viewer(canvas):
+    image_path, animations = load_animations()
+    if not image_path.is_file():
+        raise FileNotFoundError(f'Sprite atlas not found: {image_path}')
+    sheet = canvas.load_image(str(image_path))
+    validate_animations(animations, sheet.w, sheet.h)
+    return sheet, Player(animations), load_status_font(canvas)
