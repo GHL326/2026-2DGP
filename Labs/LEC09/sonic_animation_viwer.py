@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from pathlib import Path
+from time import perf_counter
 
 import pico2d as p
 
@@ -127,3 +128,26 @@ def draw_frame(sprite, rect):
     sprite.clip_draw(*clip_rectangle(rect, sprite.h),
                      *frame_layout(rect))
     p.update_canvas()
+
+
+def main():
+    open_window()
+    sprite = load_sprite()
+    player = Player()
+    previous = perf_counter()
+    running = True
+    while running:
+        for event in p.get_events():
+            if event.type == p.SDL_QUIT:
+                running = False
+        now = perf_counter()
+        player.update(now - previous)
+        previous = now
+        draw_frame(sprite, player.frame)
+        p.delay(0.001)
+    del sprite
+    p.close_canvas()
+
+
+if __name__ == "__main__":
+    main()
