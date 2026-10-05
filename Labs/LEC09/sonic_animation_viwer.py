@@ -119,8 +119,7 @@ class Player:
         interval = 1.0 / FPS
         while self.elapsed + 1e-10 >= interval:
             self.elapsed = max(0.0, self.elapsed - interval)
-            self.frame_index = min(self.frame_index + 1,
-                                   len(self.animation.frames) - 1)
+            self.frame_index = (self.frame_index + 1) % len(self.animation.frames)
 
 
 def draw_frame(sprite, rect):
