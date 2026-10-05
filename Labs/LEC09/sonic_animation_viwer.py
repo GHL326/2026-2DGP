@@ -114,6 +114,14 @@ class Player:
     def frame(self):
         return self.animation.frames[self.frame_index]
 
+    def update(self, dt):
+        self.elapsed += max(0.0, dt)
+        interval = 1.0 / FPS
+        while self.elapsed + 1e-10 >= interval:
+            self.elapsed = max(0.0, self.elapsed - interval)
+            self.frame_index = min(self.frame_index + 1,
+                                   len(self.animation.frames) - 1)
+
 
 def draw_frame(sprite, rect):
     p.clear_canvas()
