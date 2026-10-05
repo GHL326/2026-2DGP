@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from pathlib import Path
+import sys
 from time import perf_counter
 
 import pico2d as p
@@ -88,7 +89,12 @@ def open_window():
 
 
 def load_sprite():
-    sprite = p.load_image(str(IMAGE_PATH))
+    if not IMAGE_PATH.is_file():
+        raise FileNotFoundError(f"Sprite image not found: {IMAGE_PATH}")
+    try:
+        sprite = p.load_image(str(IMAGE_PATH))
+    except Exception as exc:
+        raise RuntimeError(f"Cannot load sprite image: {IMAGE_PATH}") from exc
     validate_frames(sprite.w, sprite.h)
     return sprite
 
@@ -156,22 +162,25 @@ def handle_events():
 
 def main():
     open_window()
-    sprite = load_sprite()
-    player = Player()
-    previous = perf_counter()
-    running = True
-    while running:
-        running = handle_events()
-        if not running:
-            break
-        now = perf_counter()
-        player.update(now - previous)
-        previous = now
-        draw_frame(sprite, player.frame)
-        p.delay(0.001)
-    del sprite
-    p.close_canvas()
+    sprite = None
+    try:
+        sprite = load_sprite()
+        player = Player()
+        previous = perf_counter()
+        while handle_events():
+            now = perf_counter()
+            player.update(now - previous)
+            previous = now
+            draw_frame(sprite, player.frame)
+            p.delay(0.001)
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"Sonic viewer: {exc}", file=sys.stderr)
+        return 1
+    finally:
+        del sprite
+        p.close_canvas()
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
