@@ -84,6 +84,8 @@ def clip_rectangle(rect, image_height):
 
 
 def open_window():
+    # Nearest-neighbor sampling keeps enlarged pixel art crisp.
+    p.SDL_SetHint(p.SDL_HINT_RENDER_SCALE_QUALITY, b"0")
     p.open_canvas(WIDTH, HEIGHT, sync=True)
     p.hide_lattice()
 
