@@ -116,11 +116,21 @@ class Player:
         return self.animation.frames[self.frame_index]
 
     def update(self, dt):
+        if self.state != "PLAYING":
+            return
         self.elapsed += max(0.0, dt)
         interval = 1.0 / FPS
         while self.elapsed + 1e-10 >= interval:
             self.elapsed = max(0.0, self.elapsed - interval)
-            self.frame_index = (self.frame_index + 1) % len(self.animation.frames)
+            if self.frame_index + 1 < len(self.animation.frames):
+                self.frame_index += 1
+            else:
+                self.completed += 1
+                if self.completed == REPEATS:
+                    self.state = "WAITING"
+                    self.elapsed = 0.0
+                    break
+                self.frame_index = 0
 
 
 def draw_frame(sprite, rect):
