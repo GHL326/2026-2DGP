@@ -32,9 +32,9 @@ def row(top, bottom, spans):
 # All 76 Sonic poses in reading order. Bottom credits/mascots are not frames.
 # Action names describe the visible poses; the sheet supplies no labels.
 ANIMATIONS = (
-    Animation("Idle", row(38, 78, ((1, 29), (31, 56), (58, 86),
-                                  (87, 115), (118, 147), (150, 179), (182, 212)))),
-    Animation("Look up", row(38, 78, ((213, 241), (242, 268)))),
+    Animation("Idle", row(38, 78, ((1, 29), (31, 56), (58, 85),
+                                  (86, 115), (118, 147), (150, 179), (182, 210)))),
+    Animation("Look up", row(38, 78, ((211, 239), (240, 268)))),
     Animation("Crouch", row(38, 78, ((270, 293),))),
     Animation("Curl", row(38, 78, ((302, 330),))),
     Animation("Walk", row(79, 120, ((8, 33), (37, 63), (65, 95), (97, 133),
