@@ -145,6 +145,15 @@ def draw_frame(sprite, rect):
     p.update_canvas()
 
 
+def handle_events():
+    for event in p.get_events():
+        if event.type == p.SDL_QUIT:
+            return False
+        if event.type == p.SDL_KEYDOWN and event.key == p.SDLK_ESCAPE:
+            return False
+    return True
+
+
 def main():
     open_window()
     sprite = load_sprite()
@@ -152,9 +161,9 @@ def main():
     previous = perf_counter()
     running = True
     while running:
-        for event in p.get_events():
-            if event.type == p.SDL_QUIT:
-                running = False
+        running = handle_events()
+        if not running:
+            break
         now = perf_counter()
         player.update(now - previous)
         previous = now
