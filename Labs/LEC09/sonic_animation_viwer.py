@@ -8,6 +8,7 @@ import pico2d as p
 WIDTH, HEIGHT = 1200, 800
 FPS = 10
 SCALE = 10
+BASELINE = 160
 REPEATS = 5
 WAIT_SECONDS = 1.0
 IMAGE_PATH = Path(__file__).resolve().with_name("sonic-sprite.png")
@@ -91,9 +92,14 @@ def load_sprite():
     return sprite
 
 
+def frame_layout(rect):
+    """Keep each row's original vertical offsets at a shared baseline."""
+    _, _, w, h = rect
+    return WIDTH / 2, BASELINE + h * SCALE / 2, w * SCALE, h * SCALE
+
+
 def draw_frame(sprite, rect):
     p.clear_canvas()
-    _, _, w, h = rect
     sprite.clip_draw(*clip_rectangle(rect, sprite.h),
-                     WIDTH / 2, HEIGHT / 2, w * SCALE, h * SCALE)
+                     *frame_layout(rect))
     p.update_canvas()
