@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 from pathlib import Path
 
+import pico2d as p
+
 WIDTH, HEIGHT = 1200, 800
 FPS = 10
 SCALE = 10
@@ -76,3 +78,8 @@ def validate_frames(image_width, image_height):
 def clip_rectangle(rect, image_height):
     x, top, w, h = rect
     return x, image_height - top - h, w, h
+
+
+def open_window():
+    p.open_canvas(WIDTH, HEIGHT, sync=True)
+    p.hide_lattice()
