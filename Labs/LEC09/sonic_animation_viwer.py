@@ -83,3 +83,9 @@ def clip_rectangle(rect, image_height):
 def open_window():
     p.open_canvas(WIDTH, HEIGHT, sync=True)
     p.hide_lattice()
+
+
+def load_sprite():
+    sprite = p.load_image(str(IMAGE_PATH))
+    validate_frames(sprite.w, sprite.h)
+    return sprite
