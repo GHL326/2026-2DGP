@@ -89,3 +89,11 @@ def load_sprite():
     sprite = p.load_image(str(IMAGE_PATH))
     validate_frames(sprite.w, sprite.h)
     return sprite
+
+
+def draw_frame(sprite, rect):
+    p.clear_canvas()
+    _, _, w, h = rect
+    sprite.clip_draw(*clip_rectangle(rect, sprite.h),
+                     WIDTH / 2, HEIGHT / 2, w * SCALE, h * SCALE)
+    p.update_canvas()
