@@ -54,3 +54,25 @@ ANIMATIONS = (
     Animation("Surprised", row(426, 469, ((6, 39), (49, 82)))),
     Animation("Stand", row(426, 469, ((96, 118), (125, 147)))),
 )
+
+
+def validate_frames(image_width, image_height):
+    """Reject empty, duplicate or out-of-image rectangles before rendering."""
+    seen = set()
+    for animation in ANIMATIONS:
+        if not animation.frames:
+            raise ValueError(f"No frames: {animation.name}")
+        for rect in animation.frames:
+            x, y, w, h = rect
+            if min(x, y) < 0 or min(w, h) <= 0:
+                raise ValueError(f"Invalid frame: {animation.name} {rect}")
+            if x + w > image_width or y + h > image_height:
+                raise ValueError(f"Frame outside image: {animation.name} {rect}")
+            if rect in seen:
+                raise ValueError(f"Duplicate frame: {animation.name} {rect}")
+            seen.add(rect)
+
+
+def clip_rectangle(rect, image_height):
+    x, top, w, h = rect
+    return x, image_height - top - h, w, h
