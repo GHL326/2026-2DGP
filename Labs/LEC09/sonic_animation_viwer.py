@@ -98,6 +98,23 @@ def frame_layout(rect):
     return WIDTH / 2, BASELINE + h * SCALE / 2, w * SCALE, h * SCALE
 
 
+@dataclass
+class Player:
+    action_index: int = 0
+    frame_index: int = 0
+    completed: int = 0
+    elapsed: float = 0.0
+    state: str = "PLAYING"
+
+    @property
+    def animation(self):
+        return ANIMATIONS[self.action_index]
+
+    @property
+    def frame(self):
+        return self.animation.frames[self.frame_index]
+
+
 def draw_frame(sprite, rect):
     p.clear_canvas()
     sprite.clip_draw(*clip_rectangle(rect, sprite.h),
