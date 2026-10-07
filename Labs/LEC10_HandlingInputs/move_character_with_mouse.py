@@ -1,43 +1,43 @@
+﻿from pathlib import Path
 from pico2d import *
 
 
-# fill here
+WIDTH, HEIGHT = 800, 600
+ASSET_DIR = Path(__file__).resolve().parent
 
-
-character = load_image('animation_sheet.png')
-
-
-def handle_events():
-    global running
-
-    # fill here
-
-    events = get_events()
-    for event in events:
-        if event.type == SDL_QUIT:
-            running = False
-        # fill here
-
+open_canvas(WIDTH, HEIGHT)
+hide_cursor()
+character = load_image(str(ASSET_DIR / 'animation_sheet.png'))
 
 running = True
 frame = 0
-
-# fill here
-
+x, y = WIDTH // 2, HEIGHT // 2
 
 
-while running:
-    clear_canvas()
+def handle_events():
+    global running, x, y
 
-    # fill here
-
-    update_canvas()
-    handle_events()
-    frame = (frame + 1) % 8
-    delay(0.05)
-
-close_canvas()
-
-
+    for event in get_events():
+        if event.type == SDL_QUIT:
+            running = False
+        elif event.type == SDL_KEYDOWN and getattr(event, 'key', None) == SDLK_ESCAPE:
+            running = False
+        elif event.type == SDL_MOUSEMOTION:
+            x = event.x
+            y = HEIGHT - 1 - event.y
 
 
+try:
+    while running:
+        handle_events()
+        if not running:
+            break
+
+        clear_canvas()
+        character.clip_draw(frame * 100, 100, 100, 100, x, y)
+        update_canvas()
+        frame = (frame + 1) % 8
+        delay(0.05)
+finally:
+    show_cursor()
+    close_canvas()
